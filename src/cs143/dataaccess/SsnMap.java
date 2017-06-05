@@ -10,19 +10,57 @@ public class SsnMap {
     public Retiree get(long ssn) {
         //TODO - write this code
         int fileIndex = this.hash(ssn);
-        return null;
+        SsnAvl treeResult;
+        treeResult = data.retrieveAvl(this.hash(ssn));
+        if (treeResult == null) {
+            return null;
+        }
+        return treeResult.get(ssn);
     }
 
     public boolean insert(long ssn, Retiree r) {
-        //TODO - write this code
-        return false;
+        SsnAvl treeFound;
+        boolean success;
+        int index = this.hash(ssn);
+        treeFound = data.retrieveAvl(this.hash(ssn));
+        if (treeFound == null) {
+            System.out.println("Adding a new retiree");
+            treeFound = new SsnAvl();
+            success = treeFound.add(r);
+        } else {
+            if (treeFound.get(ssn) != null) {
+                System.out.println("Social Security Number has been taken");
+                System.out.println("Retiree will not be added");
+                return false;
+            }
+            System.out.println("Adding a new retiree");
+            success = treeFound.add(r);
+        }
+        data.saveAvl(index, treeFound);
+        return success;
     }
 
     public boolean remove(long ssn) {
         //TODO - write this code
-        return false;
+        SsnAvl treeFound;
+        boolean success;
+        int index = this.hash(ssn);
+        treeFound = data.retrieveAvl(this.hash(ssn));
+        if (treeFound == null) {
+            success = false;
+            System.out.println("there are no record to remove");
+        } else {
+            if (treeFound.get(ssn) == null) {
+                System.out.println("there are no record to remove");
+                return false;
+            }
+            success = treeFound.remove(treeFound.get(ssn));
+            data.saveAvl(index, treeFound);
+            System.out.println("Retiree is removed");
+        }
+        return success;
     }
-    
+
     public int hash(long ssn) {
         int hashCode = (int) (ssn ^ (ssn >>> 32));
         return supplementalHash(hashCode) & (CAPACITY - 1);

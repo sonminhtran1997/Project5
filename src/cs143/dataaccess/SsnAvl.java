@@ -10,9 +10,9 @@ public final class SsnAvl extends BST implements Serializable {
     }
 
     public SsnAvl(Retiree[] objects) {
-        for (Retiree r: objects) {
+        for (Retiree r : objects) {
             add(r);
-        } 
+        }
     }
 
     public boolean add(Retiree r) {
@@ -150,7 +150,7 @@ public final class SsnAvl extends BST implements Serializable {
     }
 
     private void balanceLL(TreeNode a, TreeNode parentOfA) {
-        TreeNode b = a.left; 
+        TreeNode b = a.left;
         if (a == root) {
             root = b;
         } else if (parentOfA.left == a) {
@@ -159,15 +159,15 @@ public final class SsnAvl extends BST implements Serializable {
             parentOfA.right = b;
         }
 
-        a.left = b.right; 
-        b.right = a; 
+        a.left = b.right;
+        b.right = a;
         updateHeight((AVLTreeNode) a);
         updateHeight((AVLTreeNode) b);
     }
 
     private void balanceLR(TreeNode a, TreeNode parentOfA) {
-        TreeNode b = a.left; 
-        TreeNode c = b.right; 
+        TreeNode b = a.left;
+        TreeNode c = b.right;
         if (a == root) {
             root = c;
         } else if (parentOfA.left == a) {
@@ -175,8 +175,8 @@ public final class SsnAvl extends BST implements Serializable {
         } else {
             parentOfA.right = c;
         }
-        a.left = c.right; 
-        b.right = c.left; 
+        a.left = c.right;
+        b.right = c.left;
         c.left = b;
         c.right = a;
         updateHeight((AVLTreeNode) a);
@@ -185,7 +185,7 @@ public final class SsnAvl extends BST implements Serializable {
     }
 
     private void balanceRR(TreeNode a, TreeNode parentOfA) {
-        TreeNode b = a.right; 
+        TreeNode b = a.right;
         if (a == root) {
             root = b;
         } else if (parentOfA.left == a) {
@@ -193,15 +193,15 @@ public final class SsnAvl extends BST implements Serializable {
         } else {
             parentOfA.right = a;
         }
-        a.right = b.left; 
+        a.right = b.left;
         b.left = a;
         updateHeight((AVLTreeNode) a);
         updateHeight((AVLTreeNode) b);
     }
 
     private void balanceRL(TreeNode a, TreeNode parentOfA) {
-        TreeNode b = a.right; 
-        TreeNode c = b.left; 
+        TreeNode b = a.right;
+        TreeNode c = b.left;
         if (a == root) {
             root = c;
         } else if (parentOfA.left == a) {
@@ -209,8 +209,8 @@ public final class SsnAvl extends BST implements Serializable {
         } else {
             parentOfA.right = c;
         }
-        a.right = c.left; 
-        b.left = c.right; 
+        a.right = c.left;
+        b.left = c.right;
         c.left = a;
         c.right = b;
         updateHeight((AVLTreeNode) a);

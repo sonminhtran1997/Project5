@@ -42,16 +42,81 @@ public class SsnMapApp {
     }
 
     public static void delete() {
-        rm.delete(123);
+        long ssn;
+        boolean checkSsn;
+        System.out.print("Enter the Social Security number you want to delete: ");
+        try {
+            do {
+                checkSsn = true;
+                ssn = scanIn.nextLong();
+                if (ssn <= 1000000) {
+                    checkSsn = false;
+                }
+                if (ssn >= 999999999) {
+                    checkSsn = false;
+                }
+                if (!checkSsn) {
+                    System.out.println("Invalid ssn enter again:");
+                }
+            } while (!checkSsn);
+            rm.delete(ssn);
+        } catch (Exception e) {
+            System.out.println("SSN must be 9 digit number");
+            System.exit(0);
+        }
     }
 
     public static void add() {
-        //TODO - write this code
-//        rm.add(new retiree())
+        long ssn;
+        String name;
+        double benefit;
+        boolean checkSsn = true;
+        boolean checkName = true;
+        boolean checkBenefit = true;
+        try {
+            System.out.print("Enter the name of the SSN holder: ");
+            scanIn.nextLine();
+            name = scanIn.nextLine();
+            System.out.println("Enter the Social Security number you want to insert");
+            do {
+                checkSsn = true;
+                ssn = scanIn.nextLong();
+                if (ssn <= 1000000) {
+                    checkSsn = false;
+                }            
+                if (ssn >= 999999999) {
+                    checkSsn = false;
+                }       
+                if (!checkSsn) {
+                    System.out.println("Invalid ssn enter again:");
+                }
+            } while (!checkSsn);
+            System.out.println("Enter the amount of benefit money: ");
+            do {
+                checkBenefit = true;
+                benefit = scanIn.nextDouble();
+                if (benefit < 0 || benefit > 999999999) {
+                    checkBenefit = false;
+                }
+                if (!checkBenefit) {
+                    System.out.println("Invalid benefit, enter again: ");
+                }
+            } while (!checkName);
+            rm.add(new Retiree(ssn, name, benefit));
+
+        } catch (Exception e) {
+            System.out.println("Data input is invalid");
+            System.exit(0);
+        }
+
     }
 
     public static void get(long ssn) {
-        //TODO - write this code
+        if (rm.get(ssn) == null) {
+            System.out.println("Retiree does not exist in the system!");
+        } else {
+            System.out.println(rm.get(ssn).toString());
+        }
     }
 
 }

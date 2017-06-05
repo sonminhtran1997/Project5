@@ -18,13 +18,15 @@ public class DataAccessFileImpl implements IDataAccess {
             //TODO - complete this code
             FileOutputStream ostream = new FileOutputStream(filename);
             ObjectOutputStream writer = new ObjectOutputStream(ostream);
-        } catch (FileNotFoundException ex) { 
-            Logger.getLogger(DataAccessFileImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(DataAccessFileImpl.class.getName()).log(Level.SEVERE, null, ex);
+            writer.writeObject(avl);
+            System.out.println("finish saving");
+            writer.close();
+        } 
+        catch (IOException ex) {
+            System.out.println("Cannot write");
+            return false;
         }
-        
-        return false;
+        return true;
     }
 
     @Override
@@ -36,8 +38,10 @@ public class DataAccessFileImpl implements IDataAccess {
             FileInputStream istream = new FileInputStream(filename);
             ObjectInputStream reader = new ObjectInputStream(istream);
             treeResult =(SsnAvl) reader.readObject();
+            reader.close();
         } catch (FileNotFoundException ex) {
             System.out.println("The record for entered SSN does not exist");
+            return null;
         } catch (IOException ex) {
             System.out.println("The file from database cannot be read");
         } catch (ClassNotFoundException ex) {
